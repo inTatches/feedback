@@ -3,6 +3,7 @@ library feedback_sentry;
 import 'package:feedback/feedback.dart';
 import 'package:flutter/foundation.dart';
 import 'package:sentry/sentry.dart';
+
 export 'package:feedback/feedback.dart';
 
 /// Extension on [FeedbackController] in order to make
@@ -94,11 +95,13 @@ OnFeedbackCallback sendToSentryWithException({
         ));
       },
     );
-    await realHub.captureUserFeedback(SentryUserFeedback(
-      eventId: id,
-      email: email,
-      name: name,
-      comments: feedback.text + '\n${feedback.extra.toString()}',
-    ));
+    await realHub.captureUserFeedback(
+      SentryUserFeedback(
+        eventId: id,
+        email: email,
+        name: name,
+        comments: feedback.text + '\n${feedback.extra.toString()}',
+      ),
+    );
   };
 }
