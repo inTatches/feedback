@@ -57,8 +57,8 @@ class FeedbackThemeData {
         dragHandleColor ?? (isDark ? Colors.black26 : Colors.white38);
     this.colorScheme = colorScheme ??
         (isDark
-            ? ColorScheme.dark(background: background)
-            : ColorScheme.light(background: background));
+            ? ColorScheme.dark(surface: background)
+            : ColorScheme.light(surface: background));
   }
 
   /// Create a dark version of the [FeedbackThemeData]

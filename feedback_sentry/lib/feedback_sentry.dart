@@ -1,5 +1,3 @@
-library feedback_sentry;
-
 import 'package:feedback/feedback.dart';
 import 'package:flutter/foundation.dart';
 import 'package:sentry/sentry.dart';
@@ -17,11 +15,13 @@ extension SentryFeedback on FeedbackController {
     String? name,
     String? email,
   }) {
-    this.show(sendToSentry(
-      hub: hub,
-      name: name,
-      email: email,
-    ));
+    show(
+      sendToSentry(
+        hub: hub,
+        name: name,
+        email: email,
+      ),
+    );
   }
 
   /// This method opens the feedback ui and the users feedback
@@ -34,13 +34,15 @@ extension SentryFeedback on FeedbackController {
     Object? exception,
     StackTrace? stackTrace,
   }) {
-    this.show(sendToSentryWithException(
-      hub: hub,
-      name: name,
-      email: email,
-      exception: exception,
-      stackTrace: stackTrace,
-    ));
+    show(
+      sendToSentryWithException(
+        hub: hub,
+        name: name,
+        email: email,
+        exception: exception,
+        stackTrace: stackTrace,
+      ),
+    );
   }
 }
 
@@ -55,19 +57,26 @@ OnFeedbackCallback sendToSentry({
   final realHub = hub ?? HubAdapter();
 
   return (UserFeedback feedback) async {
-    final id = await realHub.captureMessage(feedback.text, withScope: (scope) {
-      scope.addAttachment(SentryAttachment.fromUint8List(
-        feedback.screenshot,
-        'screenshot.png',
-        contentType: 'image/png',
-      ));
-    });
-    await realHub.captureUserFeedback(SentryUserFeedback(
-      eventId: id,
-      email: email,
-      name: name,
-      comments: feedback.text + '\n${feedback.extra.toString()}',
-    ));
+    final id = await realHub.captureMessage(
+      feedback.text,
+      withScope: (scope) {
+        scope.addAttachment(
+          SentryAttachment.fromUint8List(
+            feedback.screenshot,
+            'screenshot.png',
+            contentType: 'image/png',
+          ),
+        );
+      },
+    );
+    await realHub.captureUserFeedback(
+      SentryUserFeedback(
+        eventId: id,
+        email: email,
+        name: name,
+        comments: '${feedback.text}\n${feedback.extra}',
+      ),
+    );
   };
 }
 
@@ -88,11 +97,13 @@ OnFeedbackCallback sendToSentryWithException({
       exception,
       stackTrace: stackTrace,
       withScope: (scope) {
-        scope.addAttachment(SentryAttachment.fromUint8List(
-          feedback.screenshot,
-          'screenshot.png',
-          contentType: 'image/png',
-        ));
+        scope.addAttachment(
+          SentryAttachment.fromUint8List(
+            feedback.screenshot,
+            'screenshot.png',
+            contentType: 'image/png',
+          ),
+        );
       },
     );
     await realHub.captureUserFeedback(
@@ -100,7 +111,7 @@ OnFeedbackCallback sendToSentryWithException({
         eventId: id,
         email: email,
         name: name,
-        comments: feedback.text + '\n${feedback.extra.toString()}',
+        comments: '${feedback.text}\n${feedback.extra}',
       ),
     );
   };
