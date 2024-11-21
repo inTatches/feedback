@@ -1,15 +1,17 @@
-# feedback_sentry
+# feedback_gitlab
 
-## Getting Started
+## 🚀 Getting Started
 
-Follow the setup instructions of [sentry_flutter](https://pub.dev/packages/sentry_flutter).
+### Setup
 
-Then, you will need to add `feedback_sentry` to your `pubspec.yaml`.
-The latest version is <a href="https://pub.dev/packages/feedback_sentry"><img src="https://img.shields.io/pub/v/feedback_sentry.svg" alt="pub.dev"></a>.
+First, you will need to add `feedback_gitlab` to your `pubspec.yaml`.
+The latest version is <a href="https://pub.dev/packages/feedback_gitlab"><img src="https://img.shields.io/pub/v/feedback_gitlab.svg" alt="pub.dev"></a>.
 
 ```yaml
 dependencies:
-  feedback_sentry: x.y.z # use the latest version found on pub.dev
+  flutter:
+    sdk: flutter
+  feedback_gitlab: x.y.z # use the latest version found on pub.dev
 ```
 
 Then, run `flutter pub get` in your terminal.
@@ -35,11 +37,9 @@ void main() {
 
 Provide a way to show the feedback panel by calling 
 ```dart
-import 'package:feedback_sentry/feedback_sentry.dart';
-
-BetterFeedback.of(context).showAndUploadToSentry(
-    name: 'Foo Bar', // optional
-    email: 'foo_bar@example.com', // optional
+BetterFeedback.of(context).showAndUploadToGitLab(
+    projectId: 'project-Id',
+    apiToken: 'api-token',
 );
 ```
 Provide a way to hide the feedback panel by calling  `BetterFeedback.of(context).hide();` 
