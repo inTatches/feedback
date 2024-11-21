@@ -15,16 +15,16 @@ extension SentryFeedbackX on FeedbackController {
     String? name,
     String? email,
   }) {
-    show(sendToSentry(
-      hub: hub,
-      name: name,
-      email: email,
-    ));
+    show(
+      sendToSentry(
+        hub: hub,
+        name: name,
+        email: email,
+      ),
+    );
   }
 }
 
-/// See [SentryFeedback.showAndUploadToSentry].
-/// This is just [visibleForTesting].
 @visibleForTesting
 OnFeedbackCallback sendToSentry({
   Hub? hub,
