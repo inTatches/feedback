@@ -2,12 +2,14 @@
 // coverage:ignore-file
 
 // ignore: avoid_web_libraries_in_flutter
-import 'dart:js' as js;
+import 'dart:js_interop';
 
 import 'package:flutter/material.dart';
 
+@JS('flutterCanvasKit')
+external JSAny? get flutterCanvasKit;
+
 void printErrorMessage() {
-  final dynamic flutterCanvasKit = js.context['flutterCanvasKit'];
   if (flutterCanvasKit != null) {
     return;
   }
